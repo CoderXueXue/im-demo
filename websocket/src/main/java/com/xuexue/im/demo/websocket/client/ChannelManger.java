@@ -2,7 +2,7 @@ package com.xuexue.im.demo.websocket.client;
 
 import org.springframework.stereotype.Component;
 
-import java.nio.channels.Channel;
+import io.netty.channel.Channel;
 import java.util.Map;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -30,5 +30,9 @@ public class ChannelManger {
         if (channels != null) {
             channels.remove(channel);
         }
+    }
+
+    public boolean isAuth(Channel channel) {
+        return false;
     }
 }

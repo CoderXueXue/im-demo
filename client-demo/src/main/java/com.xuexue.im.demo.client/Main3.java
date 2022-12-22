@@ -6,38 +6,33 @@ package com.xuexue.im.demo.client;
  */
 public class Main3 {
     public static void main(String[] args) {
-//        int[][] ints = new int[30][2];
-//        System.out.println(ints.length);
 
         Solution solution = new Solution();
-        // [[1,2,10],[2,3,20],[2,5,25]]
-        //			5
-        solution.corpFlightBookings(new int[][]{
-                {1, 2, 10}, {2, 3, 20}, {2, 5, 25}
-        }, 5);
+        System.out.println(solution.findNumberIn2DArray(new int[][]{}, 0));
     }
+
 
     static class Solution {
-        public int[] corpFlightBookings(int[][] bookings, int n) {
-            int[] diff = new int[n + 1];
+        public boolean findNumberIn2DArray(int[][] matrix, int target) {
+            int x = 0;
+            int y = matrix.length - 1;
 
-            for (int[] booking : bookings) {
-                int i = booking[0];
-                int j = booking[1];
-                int num = booking[2];
+            while (x < matrix[0].length && y >= 0) {
+                int curr = matrix[y][x];
 
-                diff[i] = diff[i] + num;
-                if (j + 1 < n + 1) {
-                    diff[j + 1] = diff[j + 1] - num;
+                if (curr == target) {
+                    return true;
                 }
-            }
+                if (curr > target) {
+                    y--;
+                }
+                if (curr < target) {
+                    x++;
+                }
 
-            // 返回结果
-            int[] result = new int[n];
-            for (int i = 1; i < diff.length; i++) {
-                result[i - 1] = diff[i] + (i == 1 ? result[i - 1] : result[i - 2]);
             }
-            return result;
+            return false;
         }
     }
+
 }

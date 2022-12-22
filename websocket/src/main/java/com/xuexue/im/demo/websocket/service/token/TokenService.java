@@ -12,7 +12,6 @@ import java.util.Map;
  */
 @Service
 public class TokenService {
-
     private static final Map<String, Integer> tokenMap = new HashMap<>();
 
     static {

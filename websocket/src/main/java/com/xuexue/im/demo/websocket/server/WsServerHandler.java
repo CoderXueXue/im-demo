@@ -35,12 +35,15 @@ public class WsServerHandler extends SimpleChannelInboundHandler<TextWebSocketFr
         // 这个是自定义的日志工具类，可见其它文章
         log.info("收到的文本消息：[{}]", text);
         // 在这里可以判断消息类型(比如初始化连接、消息在客户端间传输等)
-        // 然后可以将客户端Channel与对应的唯一标识用Map关联起来，就可以做定向推送，而不是广播
-        // 写回客户端，这里是广播
-        // clients.writeAndFlush(new TextWebSocketFrame("服务器收到消息: " + text));
 
-//        Channel channel = ctx.channel();
-//        channel.writeAndFlush(new TextWebSocketFrame("服务器收到消息: " + text));
+        // 判断是否是已经授权的用户
+        if (channelManger.isAuth(ctx.channel())) {
+            // 转发消息
+            channelManger.sendMsg(ctx.channel(), text);
+        } else {
+            // 授权
+            channelManger.auth(ctx.channel(), text);
+        }
     }
 
     /**
